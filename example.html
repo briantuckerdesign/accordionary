@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordionary Examples</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      h1 {
+        margin-bottom: 2rem;
+      }
+      h2 {
+        margin: 2rem 0 1rem;
+        color: #333;
+      }
+
+      /* Accordion structure */
+      [accordionary="component"] {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      [accordionary="item"] {
+        border-bottom: 1px solid #ddd;
+      }
+      [accordionary="item"]:last-child {
+        border-bottom: none;
+      }
+      [accordionary="header"] {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: #f5f5f5;
+        user-select: none;
+      }
+      [accordionary="header"]:hover {
+        background: #eee;
+      }
+      [accordionary="header"]:focus {
+        outline: 2px solid #0066cc;
+        outline-offset: -2px;
+      }
+      [accordionary="icon"] {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      [accordionary="content"] {
+        padding: 0 1rem;
+      }
+      [accordionary="content"] > * {
+        padding: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Accordionary Examples</h1>
+
+    <!-- Default: all closed, multiple allowed -->
+    <h2>Default (all closed, multiple allowed)</h2>
+    <div accordionary="component">
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Section 1</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>Content for section 1. Click any header to expand.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Section 2</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>Content for section 2. Multiple sections can be open at once.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Section 3</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>Content for section 3.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Open first by default -->
+    <h2>Open First (accordionary-open="first")</h2>
+    <div accordionary="component" accordionary-open="first">
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>First Section (open by default)</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This section opens automatically because it's the first one.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Second Section</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This section starts closed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Open all by default -->
+    <h2>Open All (accordionary-open="all")</h2>
+    <div accordionary="component" accordionary-open="all">
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Section A</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>All sections start open.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Section B</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>All sections start open.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Single open only -->
+    <h2>Single Open Only (accordionary-multiple="false")</h2>
+    <div
+      accordionary="component"
+      accordionary-open="first"
+      accordionary-multiple="false"
+    >
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Option 1</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>Opening another section will close this one.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Option 2</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>Only one section can be open at a time.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Option 3</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This behaves like a traditional accordion.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item-level overrides -->
+    <h2>Item-Level Overrides</h2>
+    <div accordionary="component">
+      <div accordionary="item" accordionary-open="true">
+        <div accordionary="header">
+          <span>Forced Open (accordionary-open="true")</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This item starts open regardless of component setting.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Normal Item</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This item follows the default behavior.</p>
+        </div>
+      </div>
+      <div accordionary="item" accordionary-open="false">
+        <div accordionary="header">
+          <span>Forced Closed (accordionary-open="false")</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This item starts closed even if component says "all".</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disabled items -->
+    <h2>Disabled Item (accordionary-disable="true")</h2>
+    <div accordionary="component" accordionary-open="all">
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Normal Section</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This section can be toggled normally.</p>
+        </div>
+      </div>
+      <div accordionary="item" accordionary-disable="true">
+        <div accordionary="header">
+          <span>Always Open (disabled)</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>
+            This section cannot be closed. The icon is hidden and the header is
+            not interactive.
+          </p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Another Normal Section</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This section can be toggled normally.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slow animation -->
+    <h2>Slow Animation (accordionary-speed="600")</h2>
+    <div accordionary="component" accordionary-speed="600">
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Slow Expand</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This accordion uses a 600ms animation duration.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Slow Collapse</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>The slower animation can feel more relaxed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fast animation -->
+    <h2>Fast Animation (accordionary-speed="150")</h2>
+    <div accordionary="component" accordionary-speed="150">
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Quick Expand</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This accordion uses a snappy 150ms animation.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Quick Collapse</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>Fast animations feel more responsive.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom easing -->
+    <h2>Custom Easing (accordionary-easing="ease-in-out")</h2>
+    <div accordionary="component" accordionary-speed="400" accordionary-easing="ease-in-out">
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Smooth Ease</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This uses ease-in-out for a smoother acceleration curve.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Gentle Motion</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>The animation starts and ends slowly with faster motion in the middle.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bouncy easing -->
+    <h2>Bouncy Easing (cubic-bezier)</h2>
+    <div
+      accordionary="component"
+      accordionary-speed="500"
+      accordionary-easing="cubic-bezier(0.68, -0.55, 0.27, 1.55)"
+    >
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Bouncy Open</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>This uses a custom cubic-bezier for a playful bounce effect.</p>
+        </div>
+      </div>
+      <div accordionary="item">
+        <div accordionary="header">
+          <span>Elastic Feel</span>
+          <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+          <p>Custom easing functions can create unique animation personalities.</p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./dist/accordionary.js"></script>
+  </body>
+</html>

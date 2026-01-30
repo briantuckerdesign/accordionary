@@ -1,0 +1,30 @@
+{
+  "name": "accordionary",
+  "version": "1.0.0",
+  "description": "A lightweight, accessible, vanilla JavaScript accordion with zero dependencies",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "bun build ./src/index.ts --outfile ./dist/accordionary.js --target browser --format iife --minify",
+    "watch": "bun build ./src/index.ts --outfile ./dist/accordionary.js --target browser --format iife --watch"
+  },
+  "keywords": [
+    "accordion",
+    "vanilla",
+    "javascript",
+    "accessible",
+    "a11y",
+    "no-dependencies"
+  ],
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/briantucker/accordionary"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
