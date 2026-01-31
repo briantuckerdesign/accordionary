@@ -8,6 +8,23 @@
 /** Attribute prefix for all accordionary selectors */
 const prefix = "accordionary";
 
+/** Logging prefix for console messages */
+const logPrefix = "[Accordionary]";
+
+/**
+ * Logs a warning message to the console.
+ */
+export function warn(message: string, element?: HTMLElement): void {
+  console.warn(`${logPrefix} ${message}`, element || "");
+}
+
+/**
+ * Logs an error message to the console.
+ */
+export function error(message: string, element?: HTMLElement): void {
+  console.error(`${logPrefix} ${message}`, element || "");
+}
+
 /**
  * Gets a configuration attribute value from an element.
  *
@@ -16,7 +33,7 @@ const prefix = "accordionary";
  * @returns The attribute value, or null if not set
  *
  * @example
- * // Reads "accordionary-open" attribute
+ * Reads "accordionary-open" attribute
  * getAttr(element, "open")
  */
 export function getAttr(element: HTMLElement, name: string): string | null {
@@ -32,20 +49,16 @@ export function getAttr(element: HTMLElement, name: string): string | null {
  * @throws Error if no matching element is found
  *
  * @example
- * // Finds [accordionary="header"] within an item
+ * Finds [accordionary="header"] within an item
  * select("header", itemElement)
  */
 export function select(
   selector: string,
   parent: HTMLElement | Document = document,
-): HTMLElement {
+): HTMLElement | null {
   const element = parent.querySelector(
     `[${prefix}="${selector}"]`,
   ) as HTMLElement;
-
-  if (!element) {
-    throw new Error(`Element not found using selector: ${selector}`);
-  }
 
   return element;
 }
@@ -58,7 +71,7 @@ export function select(
  * @returns NodeList of matching elements
  *
  * @example
- * // Finds all [accordionary="item"] within a component
+ * Finds all [accordionary="item"] within a component
  * selectAll("item", componentElement)
  */
 export function selectAll(

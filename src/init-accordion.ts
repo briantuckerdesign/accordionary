@@ -6,7 +6,7 @@
  */
 
 import { initItem } from "./init-item";
-import { getAttr, select, selectAll } from "./select-util";
+import { error, getAttr, select, selectAll, warn } from "./select-util";
 
 /** Check if user prefers reduced motion */
 const prefersReducedMotion = window.matchMedia(
@@ -35,11 +35,36 @@ export function initAccordion(component: HTMLElement) {
   const speedAttr = getAttr(component, "speed");
   const easingAttr = getAttr(component, "easing");
 
+  // Validate accordionary-open attribute
+  if (openAttr && !["all", "first", "none"].includes(openAttr)) {
+    warn(
+      `Invalid accordionary-open="${openAttr}". Expected "all", "first", or "none". Defaulting to "none".`,
+      component,
+    );
+  }
+
+  // Validate accordionary-multiple attribute
+  if (multipleAttr && !["true", "false"].includes(multipleAttr)) {
+    warn(
+      `Invalid accordionary-multiple="${multipleAttr}". Expected "true" or "false". Defaulting to "true".`,
+      component,
+    );
+  }
+
+  // Validate accordionary-speed attribute
+  const parsedSpeed = speedAttr ? parseInt(speedAttr, 10) : 300;
+  if (speedAttr && (isNaN(parsedSpeed) || parsedSpeed < 0)) {
+    warn(
+      `Invalid accordionary-speed="${speedAttr}". Expected a positive number in milliseconds. Defaulting to 300.`,
+      component,
+    );
+  }
+
   const config: AccordionConfig = {
     openDefault:
       openAttr === "all" || openAttr === "first" ? openAttr : "none",
     allowMultiple: multipleAttr !== "false",
-    speed: speedAttr ? parseInt(speedAttr, 10) : 300,
+    speed: isNaN(parsedSpeed) || parsedSpeed < 0 ? 300 : parsedSpeed,
     easing: easingAttr || "ease",
     reduceMotion: prefersReducedMotion,
   };
@@ -48,14 +73,54 @@ export function initAccordion(component: HTMLElement) {
   const items: Item[] = [];
   const itemElements = selectAll("item", component);
 
+  // Warn if no items found
+  if (itemElements.length === 0) {
+    warn(
+      `No items found. Add elements with accordionary="item" inside your component.`,
+      component,
+    );
+    return;
+  }
+
   for (const itemElement of itemElements) {
     const headingElement = select("header", itemElement);
     const contentElement = select("content", itemElement);
     const iconElement = select("icon", itemElement);
 
+    // Validate required child elements
+    if (!headingElement) {
+      error(
+        `Missing header element. Add accordionary="header" inside this item.`,
+        itemElement,
+      );
+      continue;
+    }
+    if (!contentElement) {
+      error(
+        `Missing content element. Add accordionary="content" inside this item.`,
+        itemElement,
+      );
+      continue;
+    }
+    if (!iconElement) {
+      error(
+        `Missing icon element. Add accordionary="icon" inside your header.`,
+        itemElement,
+      );
+      continue;
+    }
+
     // Parse item-level configuration
     const itemOpenAttr = getAttr(itemElement, "open");
     const itemDisableAttr = getAttr(itemElement, "disable");
+
+    // Validate item-level accordionary-open attribute
+    if (itemOpenAttr && !["true", "false"].includes(itemOpenAttr)) {
+      warn(
+        `Invalid accordionary-open="${itemOpenAttr}" on item. Expected "true" or "false".`,
+        itemElement,
+      );
+    }
 
     const itemConfig: ItemConfig = {
       openOverride:
