@@ -64,6 +64,11 @@ export function initItem(
   contentElement.style.transition = transition;
   contentElement.style.height = isOpen ? "auto" : "0px";
 
+  // Make closed content non-focusable
+  if (!isOpen) {
+    contentElement.inert = true;
+  }
+
   // Configure icon styles
   iconElement.style.transition = iconTransition;
   if (config.disabled) {
@@ -95,6 +100,7 @@ export function initItem(
   function open() {
     if (isOpen) return;
     isOpen = true;
+    contentElement.inert = false;
     contentElement.style.height = `${contentElement.scrollHeight}px`;
     iconElement.style.transform = "rotate(180deg)";
     headingElement.setAttribute("aria-expanded", "true");
@@ -106,6 +112,7 @@ export function initItem(
   function close() {
     if (!isOpen) return;
     isOpen = false;
+    contentElement.inert = true;
     // Set explicit height first (can't animate from "auto")
     contentElement.style.height = `${contentElement.scrollHeight}px`;
     contentElement.offsetHeight; // Force reflow
