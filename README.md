@@ -27,7 +27,7 @@ Download `dist/accordionary.js` and include it in your HTML:
 Or link directly from GitHub (replace `v1.0.0` with the desired version):
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/briantucker/accordionary@v1.0.0/dist/accordionary.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/accordionary@1.0.0/dist/accordionary.js"></script>
 ```
 
 This version auto-initializes all accordions on page load.
