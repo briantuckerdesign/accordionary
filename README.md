@@ -1,4 +1,4 @@
-# Accordionary
+# accordionary
 
 A lightweight, accessible, vanilla JavaScript accordion with zero dependencies. Perfect for Webflow, static sites, or anywhere you need a simple accordion.
 
@@ -10,7 +10,7 @@ A lightweight, accessible, vanilla JavaScript accordion with zero dependencies. 
 - Smooth, customizable animations
 - Respects `prefers-reduced-motion`
 - Configurable via HTML attributes
-- ~2.7KB minified
+- ~3.7KB minified
 
 ## Installation
 
@@ -95,10 +95,10 @@ All configuration is done via HTML attributes. No JavaScript required.
 
 ### Component-Level Attributes
 
-| Attribute               | Values                 | Default | Description                       |
-| ----------------------- | ---------------------- | ------- | --------------------------------- |
-| `accordionary-open`     | `all`, `first`, `none` | `none`  | Which items to open by default    |
-| `accordionary-multiple` | `true`, `false`        | `true`  | Allow multiple items open at once |
+| Attribute               | Values                 | Default | Description                        |
+| ----------------------- | ---------------------- | ------- | ---------------------------------- |
+| `accordionary-open`     | `all`, `first`, `none` | `none`  | Which items to open by default     |
+| `accordionary-multiple` | `true`, `false`        | `true`  | Allow multiple items open at once  |
 | `accordionary-speed`    | number (ms)            | `300`   | Animation duration in milliseconds |
 | `accordionary-easing`   | CSS easing             | `ease`  | Animation easing function          |
 
@@ -165,7 +165,11 @@ All configuration is done via HTML attributes. No JavaScript required.
 ### Custom Animation
 
 ```html
-<div accordionary="component" accordionary-speed="500" accordionary-easing="ease-in-out">
+<div
+  accordionary="component"
+  accordionary-speed="500"
+  accordionary-easing="ease-in-out"
+>
   <!-- Slower animation with ease-in-out -->
 </div>
 ```
