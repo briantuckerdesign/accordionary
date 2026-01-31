@@ -7,6 +7,13 @@
 
 import { initItem } from "./init-item";
 import { error, getAttr, select, selectAll, warn } from "./select-util";
+import type {
+  AccordionConfig,
+  AccordionController,
+  Item,
+  ItemConfig,
+  ItemController,
+} from "./types";
 
 /** Check if user prefers reduced motion */
 const prefersReducedMotion = window.matchMedia(
@@ -23,10 +30,13 @@ const prefersReducedMotion = window.matchMedia(
  * - accordionary-easing: CSS easing function (default: "ease")
  *
  * @param component - The accordion component element
+ * @returns Controller object with methods to control the accordion, or null if already initialized
  */
-export function initAccordion(component: HTMLElement) {
+export function initAccordion(
+  component: HTMLElement,
+): AccordionController | null {
   // Prevent double initialization
-  if (component.hasAttribute("data-accordionary-initialized")) return;
+  if (component.hasAttribute("data-accordionary-initialized")) return null;
   component.setAttribute("data-accordionary-initialized", "true");
 
   // Parse component-level configuration
@@ -79,7 +89,7 @@ export function initAccordion(component: HTMLElement) {
       `No items found. Add elements with accordionary="item" inside your component.`,
       component,
     );
-    return;
+    return null;
   }
 
   for (const itemElement of itemElements) {
@@ -145,4 +155,33 @@ export function initAccordion(component: HTMLElement) {
   items.forEach((item, index) => {
     initItem(item, config, index === 0, items);
   });
+
+  // Build item controllers
+  const itemControllers: ItemController[] = items.map((item) => ({
+    element: item.element,
+    open: () => item.open?.(),
+    close: () => item.close?.(),
+    toggle: () => item.toggle?.(),
+  }));
+
+  // Return accordion controller
+  return {
+    element: component,
+    openAll: () => {
+      for (const item of items) item.open?.();
+    },
+    closeAll: () => {
+      for (const item of items) item.close?.();
+    },
+    open: (index: number) => {
+      items[index]?.open?.();
+    },
+    close: (index: number) => {
+      items[index]?.close?.();
+    },
+    toggle: (index: number) => {
+      items[index]?.toggle?.();
+    },
+    items: itemControllers,
+  };
 }

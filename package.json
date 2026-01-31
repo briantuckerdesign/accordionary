@@ -2,29 +2,57 @@
   "name": "accordionary",
   "version": "1.0.0",
   "description": "A lightweight, accessible, vanilla JavaScript accordion with zero dependencies",
-  "main": "dist/index.js",
+  "author": "Brian Tucker",
+  "license": "GPL-3.0-or-later",
   "type": "module",
+  "main": "dist/accordionary.esm.js",
+  "module": "dist/accordionary.esm.js",
+  "types": "dist/accordionary.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/accordionary.d.ts",
+      "import": "./dist/accordionary.esm.js",
+      "require": "./dist/accordionary.cjs.js"
+    },
+    "./browser": "./dist/accordionary.js"
+  },
+  "files": [
+    "dist",
+    "LICENSE.txt"
+  ],
+  "sideEffects": [
+    "./dist/accordionary.js"
+  ],
   "scripts": {
-    "build": "bun build ./src/index.ts --outfile ./dist/accordionary.js --target browser --format iife --minify",
-    "watch": "bun build ./src/index.ts --outfile ./dist/accordionary.js --target browser --format iife --watch"
+    "build": "bun run build:browser && bun run build:esm && bun run build:cjs && bun run build:types",
+    "build:browser": "bun build ./src/index.ts --outfile ./dist/accordionary.js --target browser --format iife --minify",
+    "build:esm": "bun build ./src/accordionary.ts --outfile ./dist/accordionary.esm.js --target browser --format esm --minify",
+    "build:cjs": "bun build ./src/accordionary.ts --outfile ./dist/accordionary.cjs.js --target browser --format cjs --minify",
+    "build:types": "bunx tsc -p tsconfig.build.json",
+    "watch": "bun build ./src/index.ts --outfile ./dist/accordionary.js --target browser --format iife --watch",
+    "prepublishOnly": "bun run build"
   },
   "keywords": [
     "accordion",
     "vanilla",
     "javascript",
+    "typescript",
     "accessible",
     "a11y",
-    "no-dependencies"
+    "aria",
+    "no-dependencies",
+    "lightweight",
+    "webflow"
   ],
-  "license": "GPL-3.0-or-later",
   "repository": {
     "type": "git",
-    "url": "https://github.com/briantucker/accordionary"
+    "url": "git+https://github.com/briantucker/accordionary.git"
+  },
+  "homepage": "https://github.com/briantucker/accordionary#readme",
+  "bugs": {
+    "url": "https://github.com/briantucker/accordionary/issues"
   },
   "devDependencies": {
     "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
   }
 }

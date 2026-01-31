@@ -8,6 +8,8 @@
  * - Click and keyboard event handlers
  */
 
+import type { AccordionConfig, Item } from "./types";
+
 /** Counter for generating unique IDs across items */
 let itemIdCounter = 0;
 
@@ -134,8 +136,10 @@ export function initItem(
     }
   }
 
-  // Expose close function for sibling coordination
+  // Expose control functions for external access
+  item.open = open;
   item.close = close;
+  item.toggle = toggle;
 
   // Event: click to toggle
   headingElement.addEventListener("click", toggle);

@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "outDir": "dist"
+  },
+  "include": ["src/accordionary.ts", "src/types.d.ts", "src/init-accordion.ts", "src/init-item.ts", "src/select-util.ts"]
+}

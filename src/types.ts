@@ -5,7 +5,7 @@
 /**
  * Component-level configuration parsed from HTML attributes.
  */
-interface AccordionConfig {
+export interface AccordionConfig {
   /** Which items to open by default: "all", "first", or "none" */
   openDefault: "all" | "first" | "none";
   /** Whether multiple items can be open simultaneously */
@@ -21,7 +21,7 @@ interface AccordionConfig {
 /**
  * Item-level configuration parsed from HTML attributes.
  */
-interface ItemConfig {
+export interface ItemConfig {
   /** Override for initial open state (null = inherit from component) */
   openOverride: boolean | null;
   /** Whether the item is non-interactive and always open */
@@ -31,7 +31,7 @@ interface ItemConfig {
 /**
  * Represents an accordion item with its DOM elements and configuration.
  */
-interface Item {
+export interface Item {
   /** The item container element */
   element: HTMLElement;
   /** The clickable header element */
@@ -44,4 +44,42 @@ interface Item {
   config: ItemConfig;
   /** Close function exposed for sibling coordination */
   close?: () => void;
+  /** Open function exposed for external control */
+  open?: () => void;
+  /** Toggle function exposed for external control */
+  toggle?: () => void;
+}
+
+/**
+ * Control methods for an individual accordion item.
+ */
+export interface ItemController {
+  /** The item's container element */
+  element: HTMLElement;
+  /** Open this item */
+  open: () => void;
+  /** Close this item */
+  close: () => void;
+  /** Toggle this item open/closed */
+  toggle: () => void;
+}
+
+/**
+ * Control methods for an accordion component.
+ */
+export interface AccordionController {
+  /** The accordion's container element */
+  element: HTMLElement;
+  /** Open all items */
+  openAll: () => void;
+  /** Close all items */
+  closeAll: () => void;
+  /** Open item at index */
+  open: (index: number) => void;
+  /** Close item at index */
+  close: (index: number) => void;
+  /** Toggle item at index */
+  toggle: (index: number) => void;
+  /** Get all item controllers */
+  items: ItemController[];
 }

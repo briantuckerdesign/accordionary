@@ -10,9 +10,13 @@ A lightweight, accessible, vanilla JavaScript accordion with zero dependencies. 
 - Smooth, customizable animations
 - Respects `prefers-reduced-motion`
 - Configurable via HTML attributes
-- ~3.7KB minified
+- Programmatic API for full control
+- TypeScript support
+- ~4KB minified
 
 ## Installation
+
+### Browser (Auto-Initialize)
 
 Download `dist/accordionary.js` and include it in your HTML:
 
@@ -24,6 +28,28 @@ Or link directly from GitHub (replace `v1.0.0` with the desired version):
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/briantucker/accordionary@v1.0.0/dist/accordionary.js"></script>
+```
+
+This version auto-initializes all accordions on page load.
+
+### npm / bun / etc
+
+```bash
+npm install accordionary
+```
+
+```bash
+bun install accordionary
+```
+
+```typescript
+import Accordionary from "accordionary";
+
+// Initialize a single accordion
+const accordion = Accordionary.init("#my-accordion");
+
+// Or initialize all accordions on the page
+const accordions = Accordionary.initAll();
 ```
 
 ## Usage
@@ -172,6 +198,65 @@ All configuration is done via HTML attributes. No JavaScript required.
 >
   <!-- Slower animation with ease-in-out -->
 </div>
+```
+
+## Programmatic API
+
+When installed via package manager, you get full programmatic control over accordions.
+
+### Initialization
+
+```typescript
+import Accordionary from "accordionary";
+
+// Initialize by selector
+const accordion = Accordionary.init("#my-accordion");
+
+// Initialize by element
+const element = document.querySelector("#my-accordion");
+const accordion = Accordionary.init(element);
+
+// Initialize all accordions on page
+const accordions = Accordionary.initAll();
+```
+
+### Accordion Controller
+
+The `init()` function returns an `AccordionController` with these methods:
+
+```typescript
+const accordion = Accordionary.init("#my-accordion");
+
+// Open/close all items
+accordion.openAll();
+accordion.closeAll();
+
+// Control specific items by index
+accordion.open(0); // Open first item
+accordion.close(1); // Close second item
+accordion.toggle(2); // Toggle third item
+
+// Access individual item controllers
+accordion.items[0].open();
+accordion.items[0].close();
+accordion.items[0].toggle();
+
+// Access the DOM element
+accordion.element; // HTMLElement
+```
+
+### TypeScript Support
+
+Full TypeScript definitions are included:
+
+```typescript
+import Accordionary, {
+  type AccordionController,
+  type ItemController,
+} from "accordionary";
+
+const accordion: AccordionController | null =
+  Accordionary.init("#my-accordion");
 ```
 
 ## Accessibility
