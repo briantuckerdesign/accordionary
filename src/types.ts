@@ -83,3 +83,67 @@ export interface AccordionController {
   /** Get all item controllers */
   items: ItemController[];
 }
+
+/**
+ * Configuration for a single accordion item in generated data.
+ */
+export interface AccordionItemConfig {
+  /** Override for initial open state */
+  openOverride?: boolean;
+  /** Whether the item is non-interactive and always open */
+  disabled?: boolean;
+}
+
+/**
+ * Data for a single accordion item.
+ */
+export interface AccordionItemData {
+  /** HTML content for the heading */
+  heading: string;
+  /** HTML content for the collapsible content */
+  content: string;
+  /** Optional item-specific configuration */
+  config?: AccordionItemConfig;
+}
+
+/**
+ * Data structure for accordion generation.
+ */
+export interface AccordionData {
+  /** Array of accordion items */
+  items: AccordionItemData[];
+}
+
+/**
+ * CSS class names to apply to generated accordion elements.
+ */
+export interface GeneratorClasses {
+  /** Classes for the accordion component container */
+  component?: string[];
+  /** Classes for each accordion item */
+  item?: string[];
+  /** Classes for each accordion heading */
+  heading?: string[];
+  /** Classes for each accordion content panel */
+  content?: string[];
+  /** Classes for each accordion icon */
+  icon?: string[];
+}
+
+/**
+ * Configuration options for accordion generation.
+ */
+export interface GeneratorConfig {
+  /** HTML string for the expand/collapse icon (default: "▼") */
+  icon?: string;
+  /** Which items to open by default: "all", "first", or "none" (default: "none") */
+  openDefault?: "all" | "first" | "none";
+  /** Whether multiple items can be open simultaneously (default: false) */
+  allowMultiple?: boolean;
+  /** Animation duration in milliseconds (default: 300) */
+  speed?: number;
+  /** CSS easing function for animations (default: "ease") */
+  easing?: string;
+  /** Optional CSS class names to apply to elements */
+  classes?: GeneratorClasses;
+}

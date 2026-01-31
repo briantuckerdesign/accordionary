@@ -7,9 +7,26 @@
 
 import { initAccordion } from "./init-accordion";
 import { selectAll } from "./select-util";
-import type { AccordionController, ItemController } from "./types";
+import { generateAccordionary } from "./generate-accordion";
+import type {
+  AccordionController,
+  ItemController,
+  AccordionData,
+  AccordionItemData,
+  AccordionItemConfig,
+  GeneratorConfig,
+  GeneratorClasses,
+} from "./types";
 
-export type { AccordionController, ItemController };
+export type {
+  AccordionController,
+  ItemController,
+  AccordionData,
+  AccordionItemData,
+  AccordionItemConfig,
+  GeneratorConfig,
+  GeneratorClasses,
+};
 
 /**
  * Initialize a single accordion component.
@@ -59,5 +76,8 @@ export function initAll(): AccordionController[] {
   return controllers;
 }
 
+// Re-export the generator function
+export { generateAccordionary };
+
 // Default export for convenient importing
-export default { init, initAll };
+export default { init, initAll, generateAccordionary };

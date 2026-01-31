@@ -53,6 +53,7 @@
     "url": "https://github.com/briantucker/accordionary/issues"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "happy-dom": "^20.4.0"
   }
 }
