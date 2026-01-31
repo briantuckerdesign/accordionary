@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordionary</title>
+    <meta
+      name="description"
+      content="A lightweight, accessible accordion library with zero dependencies."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          Accordionary
+          <a
+            href="https://github.com/briantuckerdesign/image-exporter"
+            class="btn btn-primary github"
+            target="_blank"
+            rel="noopener"
+          >
+            View on GitHub
+            <svg
+              class="btn-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12.026 2c-5.509 0-9.974 4.465-9.974 9.974c0 4.406 2.857 8.145 6.821 9.465c.499.09.679-.217.679-.481c0-.237-.008-.865-.011-1.696c-2.775.602-3.361-1.338-3.361-1.338c-.452-1.152-1.107-1.459-1.107-1.459c-.905-.619.069-.605.069-.605c1.002.07 1.527 1.028 1.527 1.028c.89 1.524 2.336 1.084 2.902.829c.091-.645.351-1.085.635-1.334c-2.214-.251-4.542-1.107-4.542-4.93c0-1.087.389-1.979 1.024-2.675c-.101-.253-.446-1.268.099-2.64c0 0 .837-.269 2.742 1.021a9.582 9.582 0 0 1 2.496-.336a9.554 9.554 0 0 1 2.496.336c1.906-1.291 2.742-1.021 2.742-1.021c.545 1.372.203 2.387.099 2.64c.64.696 1.024 1.587 1.024 2.675c0 3.833-2.33 4.675-4.552 4.922c.355.308.675.916.675 1.846c0 1.334-.012 2.41-.012 2.737c0 .267.178.577.687.479C19.146 20.115 22 16.379 22 11.974C22 6.465 17.535 2 12.026 2z"
+              ></path>
+            </svg>
+          </a>
+        </h1>
+        <p class="tagline">A lightweight accordion library.</p>
+        <div class="pills">
+          <span class="pill">Zero dependencies</span>
+          <span class="pill">Accessible</span>
+          <span class="pill">Lightweight</span>
+          <span class="pill">Keyboard nav</span>
+          <span class="pill">Customizable</span>
+          <span class="pill">CDN implementation</span>
+          <span class="pill">Programmatic API</span>
+          <span class="pill">Fully typed</span>
+        </div>
+      </header>
+
+      <h2>Default</h2>
+      <div accordionary="component">
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section One</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section Two</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </p>
+          </div>
+        </div>
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section Three</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>
+              Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Single open only</h2>
+      <div
+        accordionary="component"
+        accordionary-open="first"
+        accordionary-multiple="false"
+      >
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section One</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore.
+            </p>
+          </div>
+        </div>
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section Two</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip.
+            </p>
+          </div>
+        </div>
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section Three</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>
+              Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <h2>All open by default</h2>
+      <div accordionary="component" accordionary-open="all">
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section One</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </div>
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section Two</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Slow animation (600ms)</h2>
+      <div accordionary="component" accordionary-speed="600">
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section One</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt.
+            </p>
+          </div>
+        </div>
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section Two</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco
+              laboris.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Custom easing (ease-in-out)</h2>
+      <div
+        accordionary="component"
+        accordionary-speed="400"
+        accordionary-easing="ease-in-out"
+      >
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section One</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </div>
+        <div accordionary="item">
+          <div accordionary="header">
+            <span>Section Two</span>
+            <span accordionary="icon">▼</span>
+          </div>
+          <div accordionary="content">
+            <p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          Made with ❤️ by
+          <a
+            href="https://github.com/briantuckerdesign"
+            target="_blank"
+            rel="noopener"
+            >Brian</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/accordionary@1.0.1/dist/accordionary.js"></script>
+  </body>
+</html>
