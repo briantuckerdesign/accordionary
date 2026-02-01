@@ -1,6 +1,6 @@
 {
   "name": "accordionary",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A lightweight, accessible, vanilla JavaScript accordion with zero dependencies",
   "author": "Brian Tucker",
   "license": "GPL-3.0-or-later",
@@ -46,11 +46,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/briantucker/accordionary.git"
+    "url": "git+https://github.com/briantuckerdesign/accordionary.git"
   },
-  "homepage": "https://github.com/briantucker/accordionary#readme",
+  "homepage": "https://github.com/briantuckerdesign/accordionary#readme",
   "bugs": {
-    "url": "https://github.com/briantucker/accordionary/issues"
+    "url": "https://github.com/briantuckerdesign/accordionary/issues"
   },
   "devDependencies": {
     "@types/bun": "latest",
