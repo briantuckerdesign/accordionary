@@ -44,6 +44,7 @@ export function initAccordion(
   const multipleAttr = getAttr(component, "multiple");
   const speedAttr = getAttr(component, "speed");
   const easingAttr = getAttr(component, "easing");
+  const linkAttr = getAttr(component, "link");
 
   // Validate accordionary-open attribute
   if (openAttr && !["all", "first", "none"].includes(openAttr)) {
@@ -57,6 +58,14 @@ export function initAccordion(
   if (multipleAttr && !["true", "false"].includes(multipleAttr)) {
     warn(
       `Invalid accordionary-multiple="${multipleAttr}". Expected "true" or "false". Defaulting to "true".`,
+      component,
+    );
+  }
+
+  // Validate accordionary-link attribute
+  if (linkAttr && !["true", "false"].includes(linkAttr)) {
+    warn(
+      `Invalid accordionary-link="${linkAttr}". Expected "true" or "false". Defaulting to "false".`,
       component,
     );
   }
@@ -77,6 +86,7 @@ export function initAccordion(
     speed: isNaN(parsedSpeed) || parsedSpeed < 0 ? 300 : parsedSpeed,
     easing: easingAttr || "ease",
     reduceMotion: prefersReducedMotion,
+    linked: linkAttr === "true",
   };
 
   // Collect all items with their elements and configuration

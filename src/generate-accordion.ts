@@ -60,6 +60,7 @@ export function generateAccordionary(
     allowMultiple = true,
     speed = 300,
     easing = "ease",
+    linked = false,
     classes = {},
   } = config;
 
@@ -79,6 +80,9 @@ export function generateAccordionary(
   }
   if (easing !== "ease") {
     component.setAttribute("accordionary-easing", easing);
+  }
+  if (linked) {
+    component.setAttribute("accordionary-link", "true");
   }
 
   // Add custom classes to component

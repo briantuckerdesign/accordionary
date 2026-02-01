@@ -1,5 +1,9 @@
 # accordionary
 
+[![Npm package version](https://badgen.net/npm/v/express)](https://npmjs.com/package/express)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
+[![TypeScript](https://img.shields.io/badge/--3178C6?logo=typescript&logoColor=ffffff)](https://www.typescriptlang.org/)
+
 A lightweight, accessible, vanilla JavaScript accordion with zero dependencies. Perfect for Webflow, static sites, or anywhere you need a simple accordion.
 
 ## Features
@@ -11,6 +15,7 @@ A lightweight, accessible, vanilla JavaScript accordion with zero dependencies. 
 - Respects `prefers-reduced-motion`
 - Configurable via HTML attributes
 - Programmatic API for full control
+- Generate accordions from JSON data (package manager only)
 - TypeScript support
 - ~4KB minified
 
@@ -24,10 +29,10 @@ Download `dist/accordionary.js` and include it in your HTML:
 <script src="your-url/accordionary.js"></script>
 ```
 
-Or link directly from GitHub (replace `v1.0.0` with the desired version):
+Or link directly from GitHub (replace `v1.0.2` with the desired version):
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/accordionary@1.0.0/dist/accordionary.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/accordionary@1.0.2/dist/accordionary.js"></script>
 ```
 
 This version auto-initializes all accordions on page load.
@@ -121,12 +126,13 @@ All configuration is done via HTML attributes. No JavaScript required.
 
 ### Component-Level Attributes
 
-| Attribute               | Values                 | Default | Description                        |
-| ----------------------- | ---------------------- | ------- | ---------------------------------- |
-| `accordionary-open`     | `all`, `first`, `none` | `none`  | Which items to open by default     |
-| `accordionary-multiple` | `true`, `false`        | `true`  | Allow multiple items open at once  |
-| `accordionary-speed`    | number (ms)            | `300`   | Animation duration in milliseconds |
-| `accordionary-easing`   | CSS easing             | `ease`  | Animation easing function          |
+| Attribute               | Values                 | Default | Description                         |
+| ----------------------- | ---------------------- | ------- | ----------------------------------- |
+| `accordionary-open`     | `all`, `first`, `none` | `none`  | Which items to open by default      |
+| `accordionary-multiple` | `true`, `false`        | `true`  | Allow multiple items open at once   |
+| `accordionary-speed`    | number (ms)            | `300`   | Animation duration in milliseconds  |
+| `accordionary-easing`   | CSS easing             | `ease`  | Animation easing function           |
+| `accordionary-link`     | `true`, `false`        | `false` | Link all items: open/close together |
 
 ### Item-Level Attributes
 
@@ -164,6 +170,16 @@ All configuration is done via HTML attributes. No JavaScript required.
   <!-- items -->
 </div>
 ```
+
+### Linked Items (Open/Close Together)
+
+```html
+<div accordionary="component" accordionary-link="true">
+  <!-- Clicking any item open opens all; clicking any item closed closes all -->
+</div>
+```
+
+Disabled items are excluded from linking — they remain in their current state.
 
 ### Force Specific Item Open
 
@@ -257,6 +273,162 @@ import Accordionary, {
 
 const accordion: AccordionController | null =
   Accordionary.init("#my-accordion");
+```
+
+## Generating Accordions from JSON
+
+When installed via package manager, you can generate accordion HTML from structured JSON data using the `generateAccordionary` function.
+
+### Basic Usage
+
+```typescript
+import { generateAccordionary } from "accordionary";
+
+const data = {
+  items: [
+    {
+      heading: "Question 1",
+      content: "Answer 1",
+    },
+    {
+      heading: "Question 2",
+      content: "Answer 2",
+    },
+  ],
+};
+
+// Generate the accordion element
+const element = generateAccordionary(data);
+
+// Append to DOM
+document.body.appendChild(element);
+
+// Initialize it
+const accordion = Accordionary.init(element);
+```
+
+### Configuration Options
+
+```typescript
+const element = generateAccordionary(data, {
+  icon: "▼", // HTML string for icon (default: "▼")
+  openDefault: "none", // "all" | "first" | "none" (default: "none")
+  allowMultiple: true, // Allow multiple items open (default: true)
+  speed: 300, // Animation duration in ms (default: 300)
+  easing: "ease", // CSS easing function (default: "ease")
+  linked: false, // Link all items open/close together (default: false)
+  classes: {
+    component: ["my-accordion"], // Custom classes for component
+    item: ["my-item"], // Custom classes for items
+    heading: ["my-heading"], // Custom classes for headings
+    content: ["my-content"], // Custom classes for content
+    icon: ["my-icon"], // Custom classes for icons
+  },
+});
+```
+
+### Custom Icon
+
+You can provide any HTML string for the icon - emoji, SVG, or image tag:
+
+```typescript
+// Emoji
+const element = generateAccordionary(data, {
+  icon: "👇",
+});
+
+// SVG
+const element = generateAccordionary(data, {
+  icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6z"/>
+  </svg>`,
+});
+
+// Image
+const element = generateAccordionary(data, {
+  icon: '<img src="/chevron.svg" alt="">',
+});
+```
+
+### Item-Level Configuration
+
+Individual items can have their own configuration:
+
+```typescript
+const data = {
+  items: [
+    {
+      heading: "Normal Item",
+      content: "This item follows component defaults",
+    },
+    {
+      heading: "Force Open Item",
+      content: "This item starts open regardless of component settings",
+      config: {
+        openOverride: true,
+      },
+    },
+    {
+      heading: "Disabled Item",
+      content: "This item cannot be toggled and is always visible",
+      config: {
+        disabled: true,
+      },
+    },
+  ],
+};
+```
+
+### HTML in Content
+
+Both `heading` and `content` accept HTML strings:
+
+```typescript
+const data = {
+  items: [
+    {
+      heading: '<div class="font-bold">Rich <em>Heading</em></div>',
+      content: `
+        <img src="/image.jpg" alt="Description">
+        <p>Paragraph with <strong>bold text</strong></p>
+        <ul>
+          <li>List item 1</li>
+          <li>List item 2</li>
+        </ul>
+      `,
+    },
+  ],
+};
+```
+
+### TypeScript Support
+
+Full type definitions are included:
+
+```typescript
+import {
+  generateAccordionary,
+  type AccordionData,
+  type GeneratorConfig,
+} from "accordionary";
+
+const data: AccordionData = {
+  items: [
+    {
+      heading: "Question",
+      content: "Answer",
+    },
+  ],
+};
+
+const config: GeneratorConfig = {
+  openDefault: "first",
+  classes: {
+    component: ["custom-accordion"],
+  },
+};
+
+const element = generateAccordionary(data, config);
 ```
 
 ## Accessibility

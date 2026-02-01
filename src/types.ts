@@ -16,6 +16,8 @@ export interface AccordionConfig {
   easing: string;
   /** Whether to disable animations (respects prefers-reduced-motion) */
   reduceMotion: boolean;
+  /** Whether all items are linked (open/close together) */
+  linked: boolean;
 }
 
 /**
@@ -144,6 +146,8 @@ export interface GeneratorConfig {
   speed?: number;
   /** CSS easing function for animations (default: "ease") */
   easing?: string;
+  /** Whether all items are linked (open/close together) (default: false) */
+  linked?: boolean;
   /** Optional CSS class names to apply to elements */
   classes?: GeneratorClasses;
 }

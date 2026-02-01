@@ -123,12 +123,24 @@ export function initItem(
 
   /**
    * Toggles the item open/closed.
+   * In linked mode, syncs all non-disabled items to the same state.
    * In single-open mode, closes other items first.
    */
   function toggle() {
     if (config.disabled) return;
 
-    if (isOpen) {
+    if (accordionConfig.linked) {
+      // Linked mode: all non-disabled items match this item's new state
+      if (isOpen) {
+        for (const otherItem of allItems) {
+          if (!otherItem.config.disabled) otherItem.close?.();
+        }
+      } else {
+        for (const otherItem of allItems) {
+          if (!otherItem.config.disabled) otherItem.open?.();
+        }
+      }
+    } else if (isOpen) {
       close();
     } else {
       // Close siblings in single-open mode

@@ -148,6 +148,25 @@ test("applies custom classes", () => {
   expect(icon?.classList.contains("my-icon")).toBe(true);
 });
 
+test("sets accordionary-link attribute when linked is true", () => {
+  const data: AccordionData = {
+    items: [
+      {
+        heading: "Test",
+        content: "Content",
+      },
+    ],
+  };
+
+  // linked defaults to false — attribute should not be present
+  const elementDefault = generateAccordionary(data);
+  expect(elementDefault.getAttribute("accordionary-link")).toBeNull();
+
+  // linked set to true — attribute should be present
+  const elementLinked = generateAccordionary(data, { linked: true });
+  expect(elementLinked.getAttribute("accordionary-link")).toBe("true");
+});
+
 test("uses custom icon HTML", () => {
   const data: AccordionData = {
     items: [
