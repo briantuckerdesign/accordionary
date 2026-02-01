@@ -1,6 +1,6 @@
 # accordionary
 
-[![Npm package version](https://badgen.net/npm/v/express)](https://npmjs.com/package/express)
+[![npm version](https://badge.fury.io/js/accordionary.svg)](https://badge.fury.io/js/accordionary)
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 [![TypeScript](https://img.shields.io/badge/--3178C6?logo=typescript&logoColor=ffffff)](https://www.typescriptlang.org/)
 
