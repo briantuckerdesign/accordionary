@@ -5,11 +5,7 @@
  * For use with package managers only (not browser implementation).
  */
 
-import type {
-  AccordionData,
-  AccordionItemData,
-  GeneratorConfig,
-} from "./types";
+import type { AccordionData, AccordionItemData, GeneratorConfig } from "./types";
 
 /**
  * Generates an accordion element from JSON data.
@@ -50,123 +46,129 @@ import type {
  * const accordion = Accordionary.init(element);
  * ```
  */
-export function generateAccordionary(
-  data: AccordionData,
-  config: GeneratorConfig = {},
-): HTMLElement {
-  const {
-    icon = "▼",
-    openDefault = "none",
-    allowMultiple = true,
-    speed = 300,
-    easing = "ease",
-    linked = false,
-    classes = {},
-  } = config;
+export function generateAccordionary(data: AccordionData, config: GeneratorConfig = {}): HTMLElement {
+    const { icon = "▼", iconOpen, iconClose, openDefault = "none", allowMultiple = true, speed = 300, easing = "ease", linked = false, classes = {} } = config;
 
-  // Create the component container
-  const component = document.createElement("div");
-  component.setAttribute("accordionary", "component");
+    // Determine icon mode: swap (iconOpen + iconClose provided) vs rotate (default)
+    const useSwapMode = iconOpen !== undefined && iconClose !== undefined;
 
-  // Set component-level attributes
-  if (openDefault !== "none") {
-    component.setAttribute("accordionary-open", openDefault);
-  }
-  if (!allowMultiple) {
-    component.setAttribute("accordionary-multiple", "false");
-  }
-  if (speed !== 300) {
-    component.setAttribute("accordionary-speed", speed.toString());
-  }
-  if (easing !== "ease") {
-    component.setAttribute("accordionary-easing", easing);
-  }
-  if (linked) {
-    component.setAttribute("accordionary-link", "true");
-  }
+    // Create the component container
+    const component = document.createElement("div");
+    component.setAttribute("accordionary", "component");
 
-  // Add custom classes to component
-  if (classes.component) {
-    component.classList.add(...classes.component);
-  }
+    // Set component-level attributes
+    if (openDefault !== "none") {
+        component.setAttribute("accordionary-open", openDefault);
+    }
+    if (!allowMultiple) {
+        component.setAttribute("accordionary-multiple", "false");
+    }
+    if (speed !== 300) {
+        component.setAttribute("accordionary-speed", speed.toString());
+    }
+    if (easing !== "ease") {
+        component.setAttribute("accordionary-easing", easing);
+    }
+    if (linked) {
+        component.setAttribute("accordionary-link", "true");
+    }
 
-  // Generate items
-  for (const itemData of data.items) {
-    const item = generateItem(itemData, icon, classes);
-    component.appendChild(item);
-  }
+    // Add custom classes to component
+    if (classes.component) {
+        component.classList.add(...classes.component);
+    }
 
-  return component;
+    // Generate items
+    for (const itemData of data.items) {
+        const item = generateItem(itemData, useSwapMode ? "" : icon, useSwapMode ? iconOpen! : undefined, useSwapMode ? iconClose! : undefined, classes);
+        component.appendChild(item);
+    }
+
+    return component;
 }
 
 /**
  * Generates a single accordion item element.
  *
  * @param itemData - Data for the item (heading, content, config)
- * @param icon - HTML string for the icon
+ * @param icon - HTML string for the icon (rotate mode)
+ * @param iconOpen - HTML string for the open icon (swap mode)
+ * @param iconClose - HTML string for the close icon (swap mode)
  * @param classes - Optional class names to apply
  * @returns An HTMLElement representing the accordion item
  */
-function generateItem(
-  itemData: AccordionItemData,
-  icon: string,
-  classes: NonNullable<GeneratorConfig["classes"]>,
-): HTMLElement {
-  const { heading, content, config = {} } = itemData;
+function generateItem(itemData: AccordionItemData, icon: string, iconOpen: string | undefined, iconClose: string | undefined, classes: NonNullable<GeneratorConfig["classes"]>): HTMLElement {
+    const { heading, content, config = {} } = itemData;
 
-  // Create item container
-  const item = document.createElement("div");
-  item.setAttribute("accordionary", "item");
+    // Create item container
+    const item = document.createElement("div");
+    item.setAttribute("accordionary", "item");
 
-  // Set item-level attributes
-  if (config.openOverride !== undefined) {
-    item.setAttribute("accordionary-open", config.openOverride.toString());
-  }
-  if (config.disabled) {
-    item.setAttribute("accordionary-disable", "true");
-  }
+    // Set item-level attributes
+    if (config.openOverride !== undefined) {
+        item.setAttribute("accordionary-open", config.openOverride.toString());
+    }
+    if (config.disabled) {
+        item.setAttribute("accordionary-disable", "true");
+    }
 
-  // Add custom classes to item
-  if (classes.item) {
-    item.classList.add(...classes.item);
-  }
+    // Add custom classes to item
+    if (classes.item) {
+        item.classList.add(...classes.item);
+    }
 
-  // Create header
-  const header = document.createElement("div");
-  header.setAttribute("accordionary", "header");
-  header.innerHTML = heading;
+    // Create header
+    const header = document.createElement("div");
+    header.setAttribute("accordionary", "header");
+    header.innerHTML = heading;
 
-  // Add custom classes to header
-  if (classes.heading) {
-    header.classList.add(...classes.heading);
-  }
+    // Add custom classes to header
+    if (classes.heading) {
+        header.classList.add(...classes.heading);
+    }
 
-  // Create icon
-  const iconElement = document.createElement("span");
-  iconElement.setAttribute("accordionary", "icon");
-  iconElement.innerHTML = icon;
+    // Create icon
+    const iconElement = document.createElement("span");
+    iconElement.setAttribute("accordionary", "icon");
 
-  // Add custom classes to icon
-  if (classes.icon) {
-    iconElement.classList.add(...classes.icon);
-  }
+    if (iconOpen !== undefined && iconClose !== undefined) {
+        // Swap mode: create open and close child elements
+        const iconOpenElement = document.createElement("span");
+        iconOpenElement.setAttribute("accordionary", "icon-open");
+        iconOpenElement.innerHTML = iconOpen;
 
-  // Append icon to header
-  header.appendChild(iconElement);
+        const iconCloseElement = document.createElement("span");
+        iconCloseElement.setAttribute("accordionary", "icon-close");
+        iconCloseElement.innerHTML = iconClose;
 
-  // Create content
-  const contentElement = document.createElement("div");
-  contentElement.setAttribute("accordionary", "content");
-  contentElement.innerHTML = content;
+        iconElement.appendChild(iconOpenElement);
+        iconElement.appendChild(iconCloseElement);
+    } else {
+        // Rotate mode: single icon content
+        iconElement.innerHTML = icon;
+    }
 
-  // Add custom classes to content
-  if (classes.content) {
-    contentElement.classList.add(...classes.content);
-  }
+    // Add custom classes to icon
+    if (classes.icon) {
+        iconElement.classList.add(...classes.icon);
+    }
 
-  // Assemble item
-  item.appendChild(header);
-  item.appendChild(contentElement);
+    // Append icon to header
+    header.appendChild(iconElement);
 
-  return item;
+    // Create content
+    const contentElement = document.createElement("div");
+    contentElement.setAttribute("accordionary", "content");
+    contentElement.innerHTML = content;
+
+    // Add custom classes to content
+    if (classes.content) {
+        contentElement.classList.add(...classes.content);
+    }
+
+    // Assemble item
+    item.appendChild(header);
+    item.appendChild(contentElement);
+
+    return item;
 }

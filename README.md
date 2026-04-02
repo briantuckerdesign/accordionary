@@ -63,16 +63,16 @@ const accordions = Accordionary.initAll();
 
 ```html
 <div accordionary="component">
-  <div accordionary="item">
-    <div accordionary="header">
-      <span>Section Title</span>
-      <span accordionary="icon">▼</span>
+    <div accordionary="item">
+        <div accordionary="header">
+            <span>Section Title</span>
+            <span accordionary="icon">▼</span>
+        </div>
+        <div accordionary="content">
+            <p>Your content here.</p>
+        </div>
     </div>
-    <div accordionary="content">
-      <p>Your content here.</p>
-    </div>
-  </div>
-  <!-- More items... -->
+    <!-- More items... -->
 </div>
 ```
 
@@ -82,41 +82,41 @@ Add some basic styles to make it look nice:
 
 ```css
 [accordionary="component"] {
-  border: 1px solid #ddd;
-  border-radius: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 [accordionary="item"] {
-  border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 [accordionary="item"]:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 [accordionary="header"] {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background: #f5f5f5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f5f5f5;
 }
 
 [accordionary="header"]:hover {
-  background: #eee;
+    background: #eee;
 }
 
 [accordionary="header"]:focus {
-  outline: 2px solid #0066cc;
-  outline-offset: -2px;
+    outline: 2px solid #0066cc;
+    outline-offset: -2px;
 }
 
 [accordionary="content"] {
-  padding: 0 1rem;
+    padding: 0 1rem;
 }
 
 [accordionary="content"] > * {
-  padding: 1rem 0;
+    padding: 1rem 0;
 }
 ```
 
@@ -147,7 +147,7 @@ All configuration is done via HTML attributes. No JavaScript required.
 
 ```html
 <div accordionary="component" accordionary-open="first">
-  <!-- items -->
+    <!-- items -->
 </div>
 ```
 
@@ -155,19 +155,15 @@ All configuration is done via HTML attributes. No JavaScript required.
 
 ```html
 <div accordionary="component" accordionary-open="all">
-  <!-- items -->
+    <!-- items -->
 </div>
 ```
 
 ### Single Open Only (Classic Accordion)
 
 ```html
-<div
-  accordionary="component"
-  accordionary-multiple="false"
-  accordionary-open="first"
->
-  <!-- items -->
+<div accordionary="component" accordionary-multiple="false" accordionary-open="first">
+    <!-- items -->
 </div>
 ```
 
@@ -175,7 +171,7 @@ All configuration is done via HTML attributes. No JavaScript required.
 
 ```html
 <div accordionary="component" accordionary-link="true">
-  <!-- Clicking any item open opens all; clicking any item closed closes all -->
+    <!-- Clicking any item open opens all; clicking any item closed closes all -->
 </div>
 ```
 
@@ -185,12 +181,12 @@ Disabled items are excluded from linking — they remain in their current state.
 
 ```html
 <div accordionary="component">
-  <div accordionary="item" accordionary-open="true">
-    <!-- This item starts open -->
-  </div>
-  <div accordionary="item">
-    <!-- This item starts closed -->
-  </div>
+    <div accordionary="item" accordionary-open="true">
+        <!-- This item starts open -->
+    </div>
+    <div accordionary="item">
+        <!-- This item starts closed -->
+    </div>
 </div>
 ```
 
@@ -198,23 +194,55 @@ Disabled items are excluded from linking — they remain in their current state.
 
 ```html
 <div accordionary="component" accordionary-open="all">
-  <div accordionary="item" accordionary-disable="true">
-    <!-- Cannot be closed, icon hidden -->
-  </div>
+    <div accordionary="item" accordionary-disable="true">
+        <!-- Cannot be closed, icon hidden -->
+    </div>
 </div>
 ```
 
 ### Custom Animation
 
 ```html
-<div
-  accordionary="component"
-  accordionary-speed="500"
-  accordionary-easing="ease-in-out"
->
-  <!-- Slower animation with ease-in-out -->
+<div accordionary="component" accordionary-speed="500" accordionary-easing="ease-in-out">
+    <!-- Slower animation with ease-in-out -->
 </div>
 ```
+
+### Custom Open/Close Icons (Swap Mode)
+
+Instead of rotating a single icon, you can provide separate icons for the open and closed states. Add `accordionary="icon-open"` and `accordionary="icon-close"` elements inside the icon container:
+
+```html
+<div accordionary="component">
+    <div accordionary="item">
+        <div accordionary="header">
+            <span>Section Title</span>
+            <span accordionary="icon">
+                <span accordionary="icon-open">−</span>
+                <span accordionary="icon-close">+</span>
+            </span>
+        </div>
+        <div accordionary="content">
+            <p>Your content here.</p>
+        </div>
+    </div>
+</div>
+```
+
+When `icon-open` and `icon-close` children are present, the library toggles their visibility instead of rotating the icon. You can use any HTML — text, SVGs, images, etc.:
+
+```html
+<span accordionary="icon">
+    <span accordionary="icon-open">
+        <svg><!-- minus icon --></svg>
+    </span>
+    <span accordionary="icon-close">
+        <svg><!-- plus icon --></svg>
+    </span>
+</span>
+```
+
+If neither `icon-open` nor `icon-close` is present, the default rotation behavior applies.
 
 ## Programmatic API
 
@@ -266,13 +294,9 @@ accordion.element; // HTMLElement
 Full TypeScript definitions are included:
 
 ```typescript
-import Accordionary, {
-  type AccordionController,
-  type ItemController,
-} from "accordionary";
+import Accordionary, { type AccordionController, type ItemController } from "accordionary";
 
-const accordion: AccordionController | null =
-  Accordionary.init("#my-accordion");
+const accordion: AccordionController | null = Accordionary.init("#my-accordion");
 ```
 
 ## Generating Accordions from JSON
@@ -285,16 +309,16 @@ When installed via package manager, you can generate accordion HTML from structu
 import { generateAccordionary } from "accordionary";
 
 const data = {
-  items: [
-    {
-      heading: "Question 1",
-      content: "Answer 1",
-    },
-    {
-      heading: "Question 2",
-      content: "Answer 2",
-    },
-  ],
+    items: [
+        {
+            heading: "Question 1",
+            content: "Answer 1",
+        },
+        {
+            heading: "Question 2",
+            content: "Answer 2",
+        },
+    ],
 };
 
 // Generate the accordion element
@@ -311,21 +335,25 @@ const accordion = Accordionary.init(element);
 
 ```typescript
 const element = generateAccordionary(data, {
-  icon: "▼", // HTML string for icon (default: "▼")
-  openDefault: "none", // "all" | "first" | "none" (default: "none")
-  allowMultiple: true, // Allow multiple items open (default: true)
-  speed: 300, // Animation duration in ms (default: 300)
-  easing: "ease", // CSS easing function (default: "ease")
-  linked: false, // Link all items open/close together (default: false)
-  classes: {
-    component: ["my-accordion"], // Custom classes for component
-    item: ["my-item"], // Custom classes for items
-    heading: ["my-heading"], // Custom classes for headings
-    content: ["my-content"], // Custom classes for content
-    icon: ["my-icon"], // Custom classes for icons
-  },
+    icon: "▼", // HTML string for icon in rotate mode (default: "▼")
+    iconOpen: undefined, // HTML string for open-state icon (swap mode)
+    iconClose: undefined, // HTML string for closed-state icon (swap mode)
+    openDefault: "none", // "all" | "first" | "none" (default: "none")
+    allowMultiple: true, // Allow multiple items open (default: true)
+    speed: 300, // Animation duration in ms (default: 300)
+    easing: "ease", // CSS easing function (default: "ease")
+    linked: false, // Link all items open/close together (default: false)
+    classes: {
+        component: ["my-accordion"], // Custom classes for component
+        item: ["my-item"], // Custom classes for items
+        heading: ["my-heading"], // Custom classes for headings
+        content: ["my-content"], // Custom classes for content
+        icon: ["my-icon"], // Custom classes for icons
+    },
 });
 ```
+
+When both `iconOpen` and `iconClose` are provided, the generator creates swap mode icons (child elements inside the icon container). When omitted, the `icon` option is used with the default rotate behavior.
 
 ### Custom Icon
 
@@ -334,19 +362,37 @@ You can provide any HTML string for the icon - emoji, SVG, or image tag:
 ```typescript
 // Emoji
 const element = generateAccordionary(data, {
-  icon: "👇",
+    icon: "👇",
 });
 
 // SVG
 const element = generateAccordionary(data, {
-  icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6z"/>
   </svg>`,
 });
 
 // Image
 const element = generateAccordionary(data, {
-  icon: '<img src="/chevron.svg" alt="">',
+    icon: '<img src="/chevron.svg" alt="">',
+});
+```
+
+### Swap Mode Icons (Generator)
+
+Use `iconOpen` and `iconClose` to generate separate open/closed state icons instead of a rotating icon:
+
+```typescript
+// Plus/minus text
+const element = generateAccordionary(data, {
+    iconOpen: "−",
+    iconClose: "+",
+});
+
+// SVG icons
+const element = generateAccordionary(data, {
+    iconOpen: "<svg><!-- minus SVG --></svg>",
+    iconClose: "<svg><!-- plus SVG --></svg>",
 });
 ```
 
@@ -356,26 +402,26 @@ Individual items can have their own configuration:
 
 ```typescript
 const data = {
-  items: [
-    {
-      heading: "Normal Item",
-      content: "This item follows component defaults",
-    },
-    {
-      heading: "Force Open Item",
-      content: "This item starts open regardless of component settings",
-      config: {
-        openOverride: true,
-      },
-    },
-    {
-      heading: "Disabled Item",
-      content: "This item cannot be toggled and is always visible",
-      config: {
-        disabled: true,
-      },
-    },
-  ],
+    items: [
+        {
+            heading: "Normal Item",
+            content: "This item follows component defaults",
+        },
+        {
+            heading: "Force Open Item",
+            content: "This item starts open regardless of component settings",
+            config: {
+                openOverride: true,
+            },
+        },
+        {
+            heading: "Disabled Item",
+            content: "This item cannot be toggled and is always visible",
+            config: {
+                disabled: true,
+            },
+        },
+    ],
 };
 ```
 
@@ -385,10 +431,10 @@ Both `heading` and `content` accept HTML strings:
 
 ```typescript
 const data = {
-  items: [
-    {
-      heading: '<div class="font-bold">Rich <em>Heading</em></div>',
-      content: `
+    items: [
+        {
+            heading: '<div class="font-bold">Rich <em>Heading</em></div>',
+            content: `
         <img src="/image.jpg" alt="Description">
         <p>Paragraph with <strong>bold text</strong></p>
         <ul>
@@ -396,8 +442,8 @@ const data = {
           <li>List item 2</li>
         </ul>
       `,
-    },
-  ],
+        },
+    ],
 };
 ```
 
@@ -406,26 +452,22 @@ const data = {
 Full type definitions are included:
 
 ```typescript
-import {
-  generateAccordionary,
-  type AccordionData,
-  type GeneratorConfig,
-} from "accordionary";
+import { generateAccordionary, type AccordionData, type GeneratorConfig } from "accordionary";
 
 const data: AccordionData = {
-  items: [
-    {
-      heading: "Question",
-      content: "Answer",
-    },
-  ],
+    items: [
+        {
+            heading: "Question",
+            content: "Answer",
+        },
+    ],
 };
 
 const config: GeneratorConfig = {
-  openDefault: "first",
-  classes: {
-    component: ["custom-accordion"],
-  },
+    openDefault: "first",
+    classes: {
+        component: ["custom-accordion"],
+    },
 };
 
 const element = generateAccordionary(data, config);

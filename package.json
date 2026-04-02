@@ -1,59 +1,59 @@
 {
-  "name": "accordionary",
-  "version": "1.0.3",
-  "description": "A lightweight, accessible, vanilla JavaScript accordion with zero dependencies",
-  "author": "Brian Tucker",
-  "license": "GPL-3.0-or-later",
-  "type": "module",
-  "main": "dist/accordionary.esm.js",
-  "module": "dist/accordionary.esm.js",
-  "types": "dist/accordionary.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/accordionary.d.ts",
-      "import": "./dist/accordionary.esm.js",
-      "require": "./dist/accordionary.cjs.js"
+    "name": "accordionary",
+    "version": "1.0.4",
+    "description": "A lightweight, accessible, vanilla JavaScript accordion with zero dependencies",
+    "author": "Brian Tucker",
+    "license": "GPL-3.0-or-later",
+    "type": "module",
+    "main": "dist/accordionary.esm.js",
+    "module": "dist/accordionary.esm.js",
+    "types": "dist/accordionary.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/accordionary.d.ts",
+            "import": "./dist/accordionary.esm.js",
+            "require": "./dist/accordionary.cjs.js"
+        },
+        "./browser": "./dist/accordionary.js"
     },
-    "./browser": "./dist/accordionary.js"
-  },
-  "files": [
-    "dist",
-    "LICENSE.txt"
-  ],
-  "sideEffects": [
-    "./dist/accordionary.js"
-  ],
-  "scripts": {
-    "build": "bun run build:browser && bun run build:esm && bun run build:cjs && bun run build:types",
-    "build:browser": "bun build ./src/index.ts --outfile ./dist/accordionary.js --target browser --format iife --minify",
-    "build:esm": "bun build ./src/accordionary.ts --outfile ./dist/accordionary.esm.js --target browser --format esm --minify",
-    "build:cjs": "bun build ./src/accordionary.ts --outfile ./dist/accordionary.cjs.js --target browser --format cjs --minify",
-    "build:types": "bunx tsc -p tsconfig.build.json",
-    "watch": "bun build ./src/index.ts --outfile ./dist/accordionary.js --target browser --format iife --watch",
-    "prepublishOnly": "bun run build"
-  },
-  "keywords": [
-    "accordion",
-    "vanilla",
-    "javascript",
-    "typescript",
-    "accessible",
-    "a11y",
-    "aria",
-    "no-dependencies",
-    "lightweight",
-    "webflow"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/briantuckerdesign/accordionary.git"
-  },
-  "homepage": "https://github.com/briantuckerdesign/accordionary#readme",
-  "bugs": {
-    "url": "https://github.com/briantuckerdesign/accordionary/issues"
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "happy-dom": "^20.4.0"
-  }
+    "files": [
+        "dist",
+        "LICENSE.txt"
+    ],
+    "sideEffects": [
+        "./dist/accordionary.js"
+    ],
+    "scripts": {
+        "build": "bun run build:browser && bun run build:esm && bun run build:cjs && bun run build:types",
+        "build:browser": "bun build ./src/index.ts --outfile ./dist/accordionary.js --target browser --format iife --minify",
+        "build:esm": "bun build ./src/accordionary.ts --outfile ./dist/accordionary.esm.js --target browser --format esm --minify",
+        "build:cjs": "bun build ./src/accordionary.ts --outfile ./dist/accordionary.cjs.js --target browser --format cjs --minify",
+        "build:types": "bunx tsc -p tsconfig.build.json",
+        "watch": "bun build ./src/index.ts --outfile ./dist/accordionary.js --target browser --format iife --watch",
+        "prepublishOnly": "bun run build"
+    },
+    "keywords": [
+        "accordion",
+        "vanilla",
+        "javascript",
+        "typescript",
+        "accessible",
+        "a11y",
+        "aria",
+        "no-dependencies",
+        "lightweight",
+        "webflow"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/briantuckerdesign/accordionary.git"
+    },
+    "homepage": "https://github.com/briantuckerdesign/accordionary#readme",
+    "bugs": {
+        "url": "https://github.com/briantuckerdesign/accordionary/issues"
+    },
+    "devDependencies": {
+        "@types/bun": "latest",
+        "happy-dom": "^20.8.9"
+    }
 }
